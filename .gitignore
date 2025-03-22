@@ -1,0 +1,42 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node Modules & Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build Output
+dist/
+build/
+
+# Environment Variables (API Keys, Database Config, dsb.)
+.env
+.env.local
+.env.development
+.env.production
+
+# Temporary Files
+*.tmp
+*.swp
+*.swo
+
+# System & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Debug & Coverage Files
+coverage/
