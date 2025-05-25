@@ -1,11 +1,10 @@
 import express from "express";
+import { getAllGames, getListDiamondById } from "../controllers/controllers.js";
 import {
-  getAllGames,
-  getListDiamondById,
-  createTransactions,
-} from "../controllers/controllers.js";
-import { createTransaction } from "../controllers/transactionControllers.js";
-
+  createTransaction,
+  paymentSuccess,
+} from "../controllers/transactionControllers.js";
+import { register } from "../controllers/authControllers.js";
 const router = express.Router();
 router.get("/user", (req, res) => {
   const { id, server } = req.query;
@@ -22,7 +21,9 @@ router.get("/user", (req, res) => {
 });
 router.get("/games", getAllGames);
 router.get("/game-detail/:id", getListDiamondById);
-router.post("/transadtions", createTransactions);
+
 router.post("/create-transaction", createTransaction);
+router.post("/payment-success", paymentSuccess);
+router.post("/register", register);
 
 export default router;
