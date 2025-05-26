@@ -4,7 +4,12 @@ import {
   createTransaction,
   paymentSuccess,
 } from "../controllers/transactionControllers.js";
-import { register } from "../controllers/authControllers.js";
+import {
+  login,
+  register,
+  handleRefreshToken,
+  logout,
+} from "../controllers/authControllers.js";
 const router = express.Router();
 router.get("/user", (req, res) => {
   const { id, server } = req.query;
@@ -25,5 +30,7 @@ router.get("/game-detail/:id", getListDiamondById);
 router.post("/create-transaction", createTransaction);
 router.post("/payment-success", paymentSuccess);
 router.post("/register", register);
-
+router.post("/login", login);
+router.get("/refresh-token", handleRefreshToken);
+router.post("/logout", logout);
 export default router;

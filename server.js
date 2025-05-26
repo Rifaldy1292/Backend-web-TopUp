@@ -2,12 +2,13 @@ import corsMidlleware from "./src/config/cors.js";
 import express from "express";
 import route from "./src/routes/route.js";
 import dotenv from "dotenv";
-
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(corsMidlleware);
