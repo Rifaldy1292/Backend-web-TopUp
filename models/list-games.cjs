@@ -12,6 +12,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      url_game_banner: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
     },
     {
       tableName: "list_game", // harus sesuai dengan nama tabel di database

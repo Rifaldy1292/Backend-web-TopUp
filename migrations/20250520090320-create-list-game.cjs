@@ -17,6 +17,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      url_game_banner: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
