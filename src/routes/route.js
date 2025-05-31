@@ -16,6 +16,9 @@ import {
   getOneGame,
   editGame,
   getAmountGames,
+  getBanners,
+  addBanner,
+  deleteBanner,
 } from "../controllers/usersController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import upload from "../multer/multer.js";
@@ -45,6 +48,7 @@ router.get("/refresh-token", handleRefreshToken);
 router.post("/logout", logout);
 router.delete("/delete-game/:id", verifyToken, deleteGame);
 router.get("/get-game/:id", verifyToken, getOneGame);
+router.get("/get-banners", getBanners);
 router.put(
   "/edit-game/:id",
   verifyToken,
@@ -63,4 +67,11 @@ router.post(
   ]),
   addGame
 );
+router.post(
+  "/add-banner",
+  verifyToken,
+  upload.fields([{ name: "image", maxCount: 1 }]),
+  addBanner
+);
+router.delete("/delete-banner/:id", verifyToken, deleteBanner);
 export default router;
