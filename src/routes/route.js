@@ -19,6 +19,8 @@ import {
   getBanners,
   addBanner,
   deleteBanner,
+  addListDiamondById,
+  deleteDiamondGame,
 } from "../controllers/usersController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import upload from "../multer/multer.js";
@@ -74,4 +76,10 @@ router.post(
   addBanner
 );
 router.delete("/delete-banner/:id", verifyToken, deleteBanner);
+router.post("/add-list-diamond/:id", verifyToken, addListDiamondById);
+router.delete(
+  "/delete-list-diamond/:id/:idDiamond",
+  verifyToken,
+  deleteDiamondGame
+);
 export default router;

@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
-const { User, ListGame, ListBanner } = pkg;
+const { User, ListGame, ListBanner, ListPacket } = pkg;
 
 export const addGame = async (req, res) => {
   try {
@@ -178,6 +178,56 @@ export const deleteBanner = async (req, res) => {
 
     res.status(200).json({
       message: "banner berhasil dihapus",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Gagal menghapus banner",
+      error: error.message,
+    });
+  }
+};
+
+export const addListDiamondById = async (req, res) => {
+  try {
+    const { game_id, packet_name, amount, status, price } = req.body;
+    const ListDiamond = await ListPacket.create({
+      game_id,
+      packet_name,
+      amount,
+      status,
+      price,
+    });
+
+    res.status(201).json({
+      message: "paket diamond berhasil ditambahkan",
+      data: ListDiamond,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Gagal menambahkan diamond",
+      error: error.message,
+    });
+  }
+};
+export const deleteDiamondGame = async (req, res) => {
+  try {
+    const { id, idDiamond } = req.params; // Ambil ID dari parameter URL
+
+    const deletedDiamond = await ListPacket.destroy({
+      where: {
+        id: idDiamond,
+        game_id: id,
+      },
+    });
+
+    if (deletedDiamond === 0) {
+      return res.status(404).json({
+        message: "diamond tidak ditemukan",
+      });
+    }
+
+    res.status(200).json({
+      message: "diamond berhasil dihapus",
     });
   } catch (error) {
     res.status(500).json({
