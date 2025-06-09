@@ -4,6 +4,12 @@ import route from "./src/routes/route.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
+import cron from "node-cron";
+import { fetchPricelistJob } from "./src/jobs/fetchPriceListDigiflazz.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
@@ -13,6 +19,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(corsMidlleware);
 app.use("/api", route);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Server is running...");
@@ -20,4 +27,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  cron.schedule("0 2 * * *", () => {
+    fetchPricelistJob();
+  });
 });

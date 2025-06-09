@@ -19,6 +19,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      product_digiflazz_id: {
+        type: Sequelize.INTEGER,
+        refrences: { model: "product_digiflazz", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+        allowNull: true,
+      },
       amount: {
         type: Sequelize.INTEGER,
         allowNull: false,

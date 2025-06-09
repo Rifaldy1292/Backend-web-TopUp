@@ -21,7 +21,9 @@ import {
   deleteBanner,
   addListDiamondById,
   deleteDiamondGame,
+  editDiamondGame,
 } from "../controllers/usersController.js";
+import { updateDigiflazzData } from "../controllers/digiflazzPricelistController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import upload from "../multer/multer.js";
 const router = express.Router();
@@ -38,6 +40,7 @@ router.get("/user", (req, res) => {
     Nickname: "rifky",
   });
 });
+router.post("/digiflazz/pricelist", updateDigiflazzData);
 router.get("/games", getAllGames);
 router.get("/games-total", getAmountGames);
 router.get("/game-detail/:id", getListDiamondById);
@@ -49,7 +52,8 @@ router.post("/login", login);
 router.get("/refresh-token", handleRefreshToken);
 router.post("/logout", logout);
 router.delete("/delete-game/:id", verifyToken, deleteGame);
-router.get("/get-game/:id", verifyToken, getOneGame);
+// router.get("/get-game/:id", verifyToken, getOneGame);
+router.get("/get-game/:id", getOneGame);
 router.get("/get-banners", getBanners);
 router.put(
   "/edit-game/:id",
@@ -82,4 +86,6 @@ router.delete(
   verifyToken,
   deleteDiamondGame
 );
+router.put("/edit-list-diamond/:id/:idDiamond", verifyToken, editDiamondGame);
+
 export default router;

@@ -236,3 +236,34 @@ export const deleteDiamondGame = async (req, res) => {
     });
   }
 };
+
+export const editDiamondGame = async (req, res) => {
+  try {
+    const { idDiamond } = req.params;
+    const { game_id, packet_name, amount, status, price } = req.body;
+    const [updated] = await ListPacket.update(
+      {
+        game_id,
+        packet_name,
+        amount,
+        status,
+        price,
+      },
+      {
+        where: { id: idDiamond },
+      }
+    );
+    if (updated === 0) {
+      return res.status(404).json({ message: "diamond tidak ditemukan " });
+    }
+    res.status(200).json({
+      message: "paket diamond berhasil diedit",
+      data: updated,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Gagal mengedit diamond",
+      error: error.message,
+    });
+  }
+};
