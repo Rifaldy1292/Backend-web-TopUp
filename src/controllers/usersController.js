@@ -1,11 +1,9 @@
 import bcrypt from "bcrypt";
 import pkg from "../../models/index.cjs";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-
+import axios from "axios";
 dotenv.config();
-const { User, ListGame, ListBanner, ListPacket } = pkg;
+const { ListGame, ListBanner, ListPacket } = pkg;
 
 export const addGame = async (req, res) => {
   try {
@@ -38,7 +36,7 @@ export const addGame = async (req, res) => {
 
 export const deleteGame = async (req, res) => {
   try {
-    const { id } = req.params; // Ambil ID dari parameter URL
+    const { id } = req.params;
 
     const deletedGame = await ListGame.destroy({
       where: { id },
@@ -164,7 +162,7 @@ export const addBanner = async (req, res) => {
 };
 export const deleteBanner = async (req, res) => {
   try {
-    const { id } = req.params; // Ambil ID dari parameter URL
+    const { id } = req.params;
 
     const deletedBanner = await ListBanner.destroy({
       where: { id },
@@ -211,7 +209,7 @@ export const addListDiamondById = async (req, res) => {
 };
 export const deleteDiamondGame = async (req, res) => {
   try {
-    const { id, idDiamond } = req.params; // Ambil ID dari parameter URL
+    const { id, idDiamond } = req.params;
 
     const deletedDiamond = await ListPacket.destroy({
       where: {
@@ -265,5 +263,27 @@ export const editDiamondGame = async (req, res) => {
       message: "Gagal mengedit diamond",
       error: error.message,
     });
+  }
+};
+
+export const cekIdServer = async (req, res) => {
+  const { id, server } = req.query;
+
+  if (!id || !server) {
+    return res.status(400).json({ error: "ID dan Server diperlukan" });
+  }
+
+  try {
+    // Contoh URL API eksternal
+    const externalUrl = `https://api-games.ilhdev.com/cek/mobile-legends?id=${id}&zone=${server}&apikey=`;
+
+    // Fetch ke API eksternal
+    const response = await axios.get(externalUrl);
+
+    // Kirim hasilnya kembali ke frontend
+    res.json(response.data);
+  } catch (error) {
+    console.error("Gagal fetch ke API eksternal:", error.message);
+    res.status(500).json({ error: "Gagal mengambil data dari API eksternal" });
   }
 };

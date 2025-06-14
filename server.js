@@ -20,6 +20,12 @@ app.use(express.json());
 app.use(corsMidlleware);
 app.use("/api", route);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// app.use((req, res, next) => {
+//   if (req.headers["x-forwarded-proto"] !== "https") {
+//     return res.redirect("https://" + req.headers.host + req.url);
+//   }
+//   next();
+// });
 
 app.get("/", (req, res) => {
   res.send("Server is running...");
